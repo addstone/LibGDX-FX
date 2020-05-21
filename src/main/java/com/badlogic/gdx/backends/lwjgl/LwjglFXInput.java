@@ -171,6 +171,22 @@ final public class LwjglFXInput implements Input {
         return 0;
     }
 
+    @Override public float getGyroscopeX() {
+        return 0;
+    }
+
+    @Override public float getGyroscopeY() {
+        return 0;
+    }
+
+    @Override public float getGyroscopeZ() {
+        return 0;
+    }
+
+    @Override public int getMaxPointers() {
+        return 0;
+    }
+
     public void getTextInput(final TextInputListener listener, final String title, final String text) {
         throw new GdxRuntimeException("Not supported");
     }
@@ -233,6 +249,14 @@ final public class LwjglFXInput implements Input {
         } else {
             return isTouched();
         }
+    }
+
+    @Override public float getPressure() {
+        return 0;
+    }
+
+    @Override public float getPressure(int i) {
+        return 0;
     }
 
     public boolean supportsMultitouch() {
@@ -770,6 +794,10 @@ final public class LwjglFXInput implements Input {
         return target.isPressed() && lastButton == toLwjglButton(button);
     }
 
+    @Override public boolean isButtonJustPressed(int i) {
+        return false;
+    }
+
     @Override public void vibrate(long[] pattern, int repeat) {
     }
 
@@ -839,11 +867,19 @@ final public class LwjglFXInput implements Input {
         //TODO
     }
 
-    @Override public void setCursorImage(Pixmap pixmap, int xHotspot, int yHotspot) {
-        throw new GdxRuntimeException("Not supported yet!");
+    @Override public void setCatchMenuKey(boolean catchMenu) {
     }
 
-    @Override public void setCatchMenuKey(boolean catchMenu) {
+    @Override public boolean isCatchMenuKey() {
+        return false;
+    }
+
+    @Override public void setCatchKey(int i, boolean b) {
+
+    }
+
+    @Override public boolean isCatchKey(int i) {
+        return false;
     }
 
     @Override public long getCurrentEventTime() {
