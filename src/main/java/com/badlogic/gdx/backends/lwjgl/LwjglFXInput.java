@@ -33,6 +33,7 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.utils.Pool;
+import org.lwjgl.input.Mouse;
 
 /** An implementation of the {@link Input} interface hooking a JavaFX ImageView for input.
  *
@@ -60,13 +61,13 @@ final public class LwjglFXInput implements Input {
     boolean isPressed, hasFocus = false;
 
     Pool<KeyEvent> usedKeyEvents = new Pool<KeyEvent>(16, 1000) {
-        @Override protected KeyEvent newObject() {
+        protected KeyEvent newObject() {
             return new KeyEvent();
         }
     };
 
     Pool<TouchEvent> usedTouchEvents = new Pool<TouchEvent>(16, 1000) {
-        @Override protected TouchEvent newObject() {
+        protected TouchEvent newObject() {
             return new TouchEvent();
         }
     };
@@ -159,15 +160,15 @@ final public class LwjglFXInput implements Input {
         });
     }
 
-    @Override public float getAccelerometerX() {
+    public float getAccelerometerX() {
         return 0;
     }
 
-    @Override public float getAccelerometerY() {
+    public float getAccelerometerY() {
         return 0;
     }
 
-    @Override public float getAccelerometerZ() {
+    public float getAccelerometerZ() {
         return 0;
     }
 
@@ -187,6 +188,7 @@ final public class LwjglFXInput implements Input {
         return 0;
     }
 
+
     public void getTextInput(final TextInputListener listener, final String title, final String text) {
         throw new GdxRuntimeException("Not supported");
     }
@@ -195,11 +197,11 @@ final public class LwjglFXInput implements Input {
         throw new GdxRuntimeException("Not supported");
     }
 
-    @Override public int getX() {
+    public int getX() {
         return mouseX;
     }
 
-    @Override public int getY() {
+    public int getY() {
         return mouseY;
     }
 
@@ -207,7 +209,7 @@ final public class LwjglFXInput implements Input {
         return false;
     }
 
-    @Override public boolean isKeyPressed(int key) {
+    public boolean isKeyPressed(int key) {
         if (key == Input.Keys.ANY_KEY) {
             return pressedKeys > 0;
         } else {
@@ -223,11 +225,11 @@ final public class LwjglFXInput implements Input {
 
     }
 
-    @Override public boolean isTouched() {
+    public boolean isTouched() {
         return target.isPressed();
     }
 
-    @Override public int getX(int pointer) {
+    public int getX(int pointer) {
         if (pointer > 0) {
             return 0;
         } else {
@@ -235,7 +237,7 @@ final public class LwjglFXInput implements Input {
         }
     }
 
-    @Override public int getY(int pointer) {
+    public int getY(int pointer) {
         if (pointer > 0) {
             return 0;
         } else {
@@ -243,7 +245,7 @@ final public class LwjglFXInput implements Input {
         }
     }
 
-    @Override public boolean isTouched(int pointer) {
+    public boolean isTouched(int pointer) {
         if (pointer > 0) {
             return false;
         } else {
@@ -258,6 +260,8 @@ final public class LwjglFXInput implements Input {
     @Override public float getPressure(int i) {
         return 0;
     }
+
+
 
     public boolean supportsMultitouch() {
         return false;
@@ -798,6 +802,8 @@ final public class LwjglFXInput implements Input {
         return false;
     }
 
+
+
     @Override public void vibrate(long[] pattern, int repeat) {
     }
 
@@ -832,7 +838,7 @@ final public class LwjglFXInput implements Input {
     }
 
     @Override public void setCursorCatched(boolean catched) {
-        //Mouse.setGrabbed(catched);
+        Mouse.setGrabbed(catched);
     }
 
     @Override public boolean isCursorCatched() {
@@ -867,6 +873,11 @@ final public class LwjglFXInput implements Input {
         //TODO
     }
 
+
+    /**
+     * 1.7.0
+     * @param catchMenu
+     */
     @Override public void setCatchMenuKey(boolean catchMenu) {
     }
 

@@ -97,7 +97,7 @@ public class LwjglToJavaFX {
 
     public void setRenderStreamFactory(final RenderStreamFactory renderStreamFactory) {
         pendingRunnables.offer(new Runnable() {
-            @Override public void run() {
+            public void run() {
                 if (renderStream != null) {
                     renderStream.destroy();
                 }
@@ -142,7 +142,7 @@ public class LwjglToJavaFX {
 
     private void resetStreams() {
         pendingRunnables.offer(new Runnable() {
-            @Override public void run() {
+            public void run() {
                 renderStream.destroy();
                 renderStream = renderStreamFactory.create(renderStream.getHandler(), samples, transfersToBuffer);
                 updateSnapshot();
@@ -169,19 +169,19 @@ public class LwjglToJavaFX {
     private StreamHandler getReadHandler() {
         return new StreamHandler() {
 
-            @Override public int getWidth() {
+            public int getWidth() {
                 return (int) targetView.getFitWidth();
             }
 
-            @Override public int getHeight() {
+            public int getHeight() {
                 return (int) targetView.getFitHeight();
             }
 
-            @Override public void process(final int width, final int height, final ByteBuffer data, final int stride, final Semaphore signal) {
+            public void process(final int width, final int height, final ByteBuffer data, final int stride, final Semaphore signal) {
                 // This method runs in the background rendering thread
                 // TODO: Run setPixels on the PlatformImage in this thread, run pixelsDirty on JFX application thread with runLater.
                 Platform.runLater(new Runnable() {
-                    @Override public void run() {
+                    public void run() {
                         try {
                             // If we're quitting, discard update
                             if (!targetView.isVisible()) {

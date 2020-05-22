@@ -22,9 +22,8 @@ public class TestApp implements ApplicationListener {
     }
 
     @Override public void resize(int width, int height) {
-        if (camera != null) {
+        if (camera != null)
             camera.setToOrtho(false, width, height);
-        }
         x = camera.position.x;
         y = camera.position.y;
     }

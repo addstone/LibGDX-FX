@@ -1,5 +1,7 @@
 import java.net.URL;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.backends.lwjgl.LwjglFXApplication;
 
@@ -13,8 +15,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-
+/**
+ * --module-path="D:\ProgramFiles\java\jdk-14.0.1\javafx-sdk-14\lib" --add-modules=javafx.controls,javafx.fxml,javafx.base,javafx.graphics,javafx.media,javafx.swing,javafx.web
+ */
 public class LwjglJavaFX extends Application {
+
     public static void main(String[] args) {
         Application.launch(args);
     }
@@ -59,6 +64,12 @@ public class LwjglJavaFX extends Application {
 
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.vSyncEnabled = true;
+
+
+        // 设置参数 启用 openGl
+        System.setProperty("org.lwjgl.opengl.Display.allowSoftwareOpenGL", "true");
+
+
         new LwjglFXApplication(new TestApp(), glArea);
     }
 }

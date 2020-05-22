@@ -54,7 +54,7 @@ public class LwjglFXApplication extends LwjglApplication {
         });
     }
 
-    protected void mainLoop() {
+    @Override protected void mainLoop() {
         Array<LifecycleListener> lifecycleListeners = this.lifecycleListeners;
         ImageView target = ((LwjglFXGraphics) graphics).target;
         Stage stage = (Stage) target.getScene().getWindow();

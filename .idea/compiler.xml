@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="LibGdx-FX" target="8" />
+      <module name="LibGdx-FX" target="14" />
     </bytecodeTargetLevel>
   </component>
 </project>

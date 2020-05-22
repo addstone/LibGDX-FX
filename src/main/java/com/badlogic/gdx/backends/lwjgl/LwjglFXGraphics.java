@@ -30,6 +30,7 @@ import javafx.stage.Stage;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.opengl.GL11;
 
 import static org.lwjgl.opengl.Display.setDisplayMode;
 
@@ -60,12 +61,10 @@ public class LwjglFXGraphics extends LwjglGraphics {
             Display.setParent(canvas);
         } else {
 
-
-
+            // 判断方法
             //            org.lwjgl.opengl.DisplayMode displayMode = new org.lwjgl.opengl.DisplayMode(config.width, config.height);
-
-            if (!setDisplayMode(config.width, config.height, config.fullscreen)) {
-                //            if (setDisplayMode(displayMode)) {
+            //            setDisplayMode(displayMode);
+            if (!setDisplayModesetDisplayMode(config.width, config.height, config.fullscreen)) {
                 throw new GdxRuntimeException("Couldn't set display mode " + config.width + "x" + config.height + ", fullscreen: " + config.fullscreen);
             }
 
@@ -89,10 +88,14 @@ public class LwjglFXGraphics extends LwjglGraphics {
         if (config.x != -1 && config.y != -1) {
             Display.setLocation(config.x, config.y);
         }
+
         createDisplayPixelFormat();
+
         config.x = Display.getX();
         config.y = Display.getY();
+
         initiateGLInstances();
+
     }
 
     private void createDisplayPixelFormat() {
@@ -111,7 +114,7 @@ public class LwjglFXGraphics extends LwjglGraphics {
      * @param fullscreen
      * @return
      */
-    public boolean setDisplayMode(int width, int height, boolean fullscreen) {
+    public boolean setDisplayModesetDisplayMode(int width, int height, boolean fullscreen) {
         if (this.getWidth() == width && this.getHeight() == height && Display.isFullscreen() == fullscreen) {
             return true;
         } else {
@@ -165,5 +168,29 @@ public class LwjglFXGraphics extends LwjglGraphics {
             }
         }
     }
+
+    /**
+     * 本地方法需要
+     * @return
+     */
+    public void initiateGLInstances() {
+        if (this.usingGL30) {
+            this.gl30 = new LwjglGL30();
+            this.gl20 = this.gl30;
+        } else {
+            this.gl20 = new LwjglGL20();
+        }
+
+        //        if (!isOpenGLOrHigher(2, 0)) {
+        //            throw new GdxRuntimeException("OpenGL 2.0 or higher with the FBO extension is required. OpenGL version: " + GL11.glGetString(7938) + "\n" + this.glInfo());
+        //        } else if (!supportsFBO()) {
+        //            throw new GdxRuntimeException("OpenGL 2.0 or higher with the FBO extension is required. OpenGL version: " + GL11.glGetString(7938) + ", FBO extension: false\n" + this.glInfo());
+        //        } else {
+        Gdx.gl = this.gl20;
+        Gdx.gl20 = this.gl20;
+        Gdx.gl30 = this.gl30;
+        //        }
+    }
+
 
 }

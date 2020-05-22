@@ -8,16 +8,15 @@
     <artifactId>LibGdx-FX</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-
     <properties>
         <!-- 文件拷贝时的编码 -->
-        <javafx.version>8</javafx.version>
-        <jdk.version>8</jdk.version>
+        <javafx.version>14</javafx.version>
+        <jdk.version>14</jdk.version>
         <!-- 编译时的编码 -->
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <!-- Maven 编译时的 JDK 版本-->
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>14</maven.compiler.source>
+        <maven.compiler.target>14</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spine-libgdx.version>3.5.51.1</spine-libgdx.version>
@@ -26,29 +25,90 @@
 
 
     </properties>
+
     <dependencies>
+        <!--        <dependency>-->
+        <!--            <groupId>com.esotericsoftware.spine</groupId>-->
+        <!--            <artifactId>spine-libgdx</artifactId>-->
+        <!--            <version>${spine-libgdx.version}</version>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>com.badlogicgames.gdx</groupId>
             <artifactId>gdx</artifactId>
             <version>${gdx.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.badlogicgames.gdx/gdx-backend-lwjgl-->
+
+        <!-- https://mvnrepository.com/artifact/com.badlogicgames.gdx/gdx-backend-lwjgl-natives -->
+        <!--        <dependency>-->
+        <!--            <groupId>com.badlogicgames.gdx</groupId>-->
+        <!--            <artifactId>gdx-backend-lwjgl-natives</artifactId>-->
+        <!--            <version>${gdx.version}</version>-->
+        <!--            <scope>test</scope>-->
+        <!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/com.badlogicgames.gdx/gdx-natives -->
+        <!--        <dependency>-->
+        <!--            <groupId>com.badlogicgames.gdx</groupId>-->
+        <!--            <artifactId>gdx-natives</artifactId>-->
+        <!--            <version>${gdx.version}</version>-->
+        <!--            <scope>test</scope>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>com.badlogicgames.gdx</groupId>
             <artifactId>gdx-backend-lwjgl</artifactId>
             <version>${gdx.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.badlogicgames.gdx</groupId>
+            <artifactId>gdx-box2d</artifactId>
+            <version>${gdx.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.badlogicgames.gdx/gdx-box2d-platform -->
+        <dependency>
+            <groupId>com.badlogicgames.gdx</groupId>
+            <artifactId>gdx-box2d-platform</artifactId>
+            <version>${gdx.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.lwjgl.lwjgl/lwjgl -->
         <!--        <dependency>-->
-        <!--            <groupId>com.badlogicgames.gdx</groupId>-->
-        <!--            <artifactId>gdx-backend-lwjgl-natives</artifactId>-->
-        <!--            <version>${gdx.version}</version>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.badlogicgames.gdx</groupId>-->
-        <!--            <artifactId>gdx-backend-lwjgl-natives</artifactId>-->
-        <!--            <version>${gdx.version}</version>-->
+        <!--            <groupId>org.lwjgl.lwjgl</groupId>-->
+        <!--            <artifactId>lwjgl</artifactId>-->
+        <!--            <version>2.9.3</version>-->
         <!--        </dependency>-->
 
 
     </dependencies>
+
+
+    <repositories>
+        <repository>
+            <id>nightlies</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </repository>
+    </repositories>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <release>${jdk.version}</release>
+                </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <version>3.8.0</version>
+            </plugin>
+            <plugin>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.soucod.spine.libdgx.learn.demo.DemoSimpleTest1</mainClass>
+                </configuration>
+                <groupId>org.openjfx</groupId>
+                <version>0.0.4</version>
+            </plugin>
+        </plugins>
+    </build>
+
 
 </project>
