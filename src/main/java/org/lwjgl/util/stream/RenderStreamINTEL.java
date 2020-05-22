@@ -55,12 +55,12 @@ import static org.lwjgl.opengl.INTELMapTexture.*;
 final class RenderStreamINTEL extends StreamBuffered implements RenderStream {
 
     public static final RenderStreamFactory FACTORY = new RenderStreamFactory("INTEL_map_texture") {
-        @Override public boolean isSupported(final ContextCapabilities caps) {
+        public boolean isSupported(final ContextCapabilities caps) {
             // TODO: We currently require BlitFramebuffer. Relax and implement manually?
             return caps.GL_INTEL_map_texture && (caps.OpenGL30 || caps.GL_ARB_framebuffer_object || caps.GL_EXT_framebuffer_blit);
         }
 
-        @Override public RenderStream create(final StreamHandler handler, final int samples, final int transfersToBuffer) {
+        public RenderStream create(final StreamHandler handler, final int samples, final int transfersToBuffer) {
             return new RenderStreamINTEL(handler, samples, transfersToBuffer);
         }
     };
@@ -98,7 +98,7 @@ final class RenderStreamINTEL extends StreamBuffered implements RenderStream {
         this.samples = StreamUtil.checkSamples(samples, caps);
     }
 
-    @Override public StreamHandler getHandler() {
+    public StreamHandler getHandler() {
         return handler;
     }
 
@@ -153,7 +153,7 @@ final class RenderStreamINTEL extends StreamBuffered implements RenderStream {
         return texID;
     }
 
-    @Override public void bind() {
+    public void bind() {
         if (this.width != handler.getWidth() || this.height != handler.getHeight()) {
             resize(handler.getWidth(), handler.getHeight());
         }
@@ -178,7 +178,7 @@ final class RenderStreamINTEL extends StreamBuffered implements RenderStream {
         fboUtil.bindFramebuffer(GL_READ_FRAMEBUFFER, 0);
     }
 
-    @Override public void swapBuffers() {
+    public void swapBuffers() {
         if (width == 0 || height == 0) {
             return;
         }
@@ -243,7 +243,7 @@ final class RenderStreamINTEL extends StreamBuffered implements RenderStream {
         }
     }
 
-    @Override protected void postProcess(int index) {
+    protected void postProcess(int index) {
         glUnmapTexture2DINTEL(resolveBuffers[index], 0);
     }
 
@@ -267,7 +267,7 @@ final class RenderStreamINTEL extends StreamBuffered implements RenderStream {
         }
     }
 
-    @Override public void destroy() {
+    public void destroy() {
         destroyObjects();
 
         if (resolveFBO != 0) {

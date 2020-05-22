@@ -42,13 +42,13 @@ import static org.lwjgl.opengl.GL31.*;
 final class RenderStreamPBOCopy extends RenderStreamPBO {
 
     public static final RenderStreamFactory FACTORY = new RenderStreamFactory("ARB_copy_buffer") {
-        @Override public boolean isSupported(final ContextCapabilities caps) {
+        public boolean isSupported(final ContextCapabilities caps) {
             return RenderStreamPBODefault.FACTORY.isSupported(caps) && caps.GL_ARB_copy_buffer && caps.GL_NV_gpu_program5 // Nvidia only
                     && (caps.OpenGL40 || caps.GL_ARB_tessellation_shader) // Fermi+
                     ;
         }
 
-        @Override public RenderStream create(final StreamHandler handler, final int samples, final int transfersToBuffer) {
+        public RenderStream create(final StreamHandler handler, final int samples, final int transfersToBuffer) {
             return new RenderStreamPBOCopy(handler, samples, transfersToBuffer, ReadbackType.GET_TEX_IMAGE);
         }
     };
@@ -59,7 +59,7 @@ final class RenderStreamPBOCopy extends RenderStreamPBO {
         super(handler, samples, transfersToBuffer, readbackType);
     }
 
-    @Override protected void resizeBuffers(final int height, final int stride) {
+    protected void resizeBuffers(final int height, final int stride) {
         super.resizeBuffers(height, stride);
 
         devicePBO = glGenBuffers();
@@ -69,7 +69,7 @@ final class RenderStreamPBOCopy extends RenderStreamPBO {
         glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
     }
 
-    @Override protected void readBack(final int index) {
+    protected void readBack(final int index) {
         glBindBuffer(GL_PIXEL_PACK_BUFFER, devicePBO);
 
         super.readBack(index);
@@ -82,7 +82,7 @@ final class RenderStreamPBOCopy extends RenderStreamPBO {
         glBindBuffer(GL_COPY_READ_BUFFER, 0);
     }
 
-    @Override protected void pinBuffer(final int index) {
+    protected void pinBuffer(final int index) {
         glBindBuffer(GL_PIXEL_PACK_BUFFER, pbos[index]);
 
         // We don't need to manually synchronized here, MapBuffer will block until ReadPixels above has finished.
@@ -92,7 +92,7 @@ final class RenderStreamPBOCopy extends RenderStreamPBO {
         glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
     }
 
-    @Override protected void copyFrames(final int src, final int trg) {
+    protected void copyFrames(final int src, final int trg) {
         glBindBuffer(GL_PIXEL_PACK_BUFFER, pbos[src]);
         glBindBuffer(GL_COPY_WRITE_BUFFER, pbos[trg]);
 
@@ -102,11 +102,11 @@ final class RenderStreamPBOCopy extends RenderStreamPBO {
         glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
     }
 
-    @Override protected void postProcess(final int index) {
+    protected void postProcess(final int index) {
         glUnmapBuffer(GL_PIXEL_PACK_BUFFER);
     }
 
-    @Override protected void destroyObjects() {
+    protected void destroyObjects() {
         glDeleteBuffers(devicePBO);
         super.destroyObjects();
     }

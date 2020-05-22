@@ -43,11 +43,11 @@ import static org.lwjgl.opengl.GL31.*;
 final class RenderStreamPBODefault extends RenderStreamPBO {
 
     public static final RenderStreamFactory FACTORY = new RenderStreamFactory("Asynchronous PBO") {
-        @Override public boolean isSupported(final ContextCapabilities caps) {
+        public boolean isSupported(final ContextCapabilities caps) {
             return caps.OpenGL21 || caps.GL_ARB_pixel_buffer_object || caps.GL_EXT_pixel_buffer_object;
         }
 
-        @Override public RenderStream create(final StreamHandler handler, final int samples, final int transfersToBuffer) {
+        public RenderStream create(final StreamHandler handler, final int samples, final int transfersToBuffer) {
             final ContextCapabilities caps = GLContext.getCapabilities();
 
             return new RenderStreamPBODefault(handler, samples, transfersToBuffer,
@@ -69,7 +69,7 @@ final class RenderStreamPBODefault extends RenderStreamPBO {
                 !StreamUtil.isAMD(caps);
     }
 
-    @Override protected void pinBuffer(final int index) {
+    protected void pinBuffer(final int index) {
         glBindBuffer(GL_PIXEL_PACK_BUFFER, pbos[index]);
 
         // We don't need to manually synchronized here, MapBuffer will block until ReadPixels above has finished.
@@ -79,7 +79,7 @@ final class RenderStreamPBODefault extends RenderStreamPBO {
         glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
     }
 
-    @Override protected void copyFrames(final int src, final int trg) {
+    protected void copyFrames(final int src, final int trg) {
         if (USE_COPY_BUFFER_SUB_DATA) {
             glBindBuffer(GL_COPY_WRITE_BUFFER, pbos[trg]);
             glCopyBufferSubData(GL_PIXEL_PACK_BUFFER, GL_COPY_WRITE_BUFFER, 0, 0, height * stride);
@@ -95,7 +95,7 @@ final class RenderStreamPBODefault extends RenderStreamPBO {
         }
     }
 
-    @Override protected void postProcess(final int index) {
+    protected void postProcess(final int index) {
         glUnmapBuffer(GL_PIXEL_PACK_BUFFER);
     }
 

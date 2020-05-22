@@ -55,15 +55,15 @@ abstract class TextureStreamPBO extends StreamBufferedPBO implements TextureStre
         glBindTexture(GL_TEXTURE_2D, 0);
     }
 
-    @Override public StreamHandler getHandler() {
+    public StreamHandler getHandler() {
         return handler;
     }
 
-    @Override public int getWidth() {
+    public int getWidth() {
         return width;
     }
 
-    @Override public int getHeight() {
+    public int getHeight() {
         return height;
     }
 
@@ -97,7 +97,7 @@ abstract class TextureStreamPBO extends StreamBufferedPBO implements TextureStre
         super.resizeBuffers(height, stride, GL_PIXEL_UNPACK_BUFFER, GL_STREAM_DRAW);
     }
 
-    @Override public void snapshot() {
+    public void snapshot() {
         if (width != handler.getWidth() || height != handler.getHeight()) {
             resize(handler.getWidth(), handler.getHeight());
         }
@@ -133,7 +133,7 @@ abstract class TextureStreamPBO extends StreamBufferedPBO implements TextureStre
 
     protected abstract void pinBuffer(final int index);
 
-    @Override public void tick() {
+    public void tick() {
         final int srcPBO = (int) (currentIndex % transfersToBuffer);
         if (!processingState.get(srcPBO)) {
             return;
@@ -172,7 +172,7 @@ abstract class TextureStreamPBO extends StreamBufferedPBO implements TextureStre
 
     protected abstract void postUpload(int index);
 
-    @Override public void bind() {
+    public void bind() {
         glBindTexture(GL_TEXTURE_2D, texID);
     }
 
@@ -193,7 +193,7 @@ abstract class TextureStreamPBO extends StreamBufferedPBO implements TextureStre
         }
     }
 
-    @Override public void destroy() {
+    public void destroy() {
         destroyObjects();
     }
 

@@ -214,7 +214,7 @@ public final class StreamUtil {
 
         public abstract boolean isSupported(ContextCapabilities caps);
 
-        @Override public String toString() {
+        public String toString() {
             return description;
         }
 
@@ -334,93 +334,93 @@ public final class StreamUtil {
     static FBOUtil getFBOUtil(final ContextCapabilities caps) {
         if (caps.OpenGL30 || caps.GL_ARB_framebuffer_object) {
             return new FBOUtil() {
-                @Override public int genFramebuffers() {
+                public int genFramebuffers() {
                     return glGenFramebuffers();
                 }
 
-                @Override public void bindFramebuffer(int target, int framebuffer) {
+                public void bindFramebuffer(int target, int framebuffer) {
                     glBindFramebuffer(target, framebuffer);
                 }
 
-                @Override public void framebufferTexture2D(int target, int attachment, int textarget, int texture, int level) {
+                public void framebufferTexture2D(int target, int attachment, int textarget, int texture, int level) {
                     glFramebufferTexture2D(target, attachment, textarget, texture, level);
                 }
 
-                @Override public void framebufferRenderbuffer(int target, int attachment, int renderbuffertarget, int renderbuffer) {
+                public void framebufferRenderbuffer(int target, int attachment, int renderbuffertarget, int renderbuffer) {
                     glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer);
                 }
 
-                @Override public void deleteFramebuffers(int framebuffer) {
+                public void deleteFramebuffers(int framebuffer) {
                     glDeleteFramebuffers(framebuffer);
                 }
 
-                @Override public int genRenderbuffers() {
+                public int genRenderbuffers() {
                     return glGenRenderbuffers();
                 }
 
-                @Override public void bindRenderbuffer(int target, int renderbuffer) {
+                public void bindRenderbuffer(int target, int renderbuffer) {
                     glBindRenderbuffer(target, renderbuffer);
                 }
 
-                @Override public void renderbufferStorage(int target, int internalformat, int width, int height) {
+                public void renderbufferStorage(int target, int internalformat, int width, int height) {
                     glRenderbufferStorage(target, internalformat, width, height);
                 }
 
-                @Override public void renderbufferStorageMultisample(int target, int samples, int internalformat, int width, int height) {
+                public void renderbufferStorageMultisample(int target, int samples, int internalformat, int width, int height) {
                     glRenderbufferStorageMultisample(target, samples, internalformat, width, height);
                 }
 
-                @Override public void blitFramebuffer(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, int mask, int filter) {
+                public void blitFramebuffer(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, int mask, int filter) {
                     glBlitFramebuffer(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
                 }
 
-                @Override public void deleteRenderbuffers(int renderbuffer) {
+                public void deleteRenderbuffers(int renderbuffer) {
                     glDeleteRenderbuffers(renderbuffer);
                 }
             };
         } else if (caps.GL_EXT_framebuffer_object) {
             return new FBOUtil() {
-                @Override public int genFramebuffers() {
+                public int genFramebuffers() {
                     return glGenFramebuffersEXT();
                 }
 
-                @Override public void bindFramebuffer(int target, int framebuffer) {
+                public void bindFramebuffer(int target, int framebuffer) {
                     glBindFramebufferEXT(target, framebuffer);
                 }
 
-                @Override public void framebufferTexture2D(int target, int attachment, int textarget, int texture, int level) {
+                public void framebufferTexture2D(int target, int attachment, int textarget, int texture, int level) {
                     glFramebufferTexture2DEXT(target, attachment, textarget, texture, level);
                 }
 
-                @Override public void framebufferRenderbuffer(int target, int attachment, int renderbuffertarget, int renderbuffer) {
+                public void framebufferRenderbuffer(int target, int attachment, int renderbuffertarget, int renderbuffer) {
                     glFramebufferRenderbufferEXT(target, attachment, renderbuffertarget, renderbuffer);
                 }
 
-                @Override public void deleteFramebuffers(int framebuffer) {
+                public void deleteFramebuffers(int framebuffer) {
                     glDeleteFramebuffersEXT(framebuffer);
                 }
 
-                @Override public int genRenderbuffers() {
+                public int genRenderbuffers() {
                     return glGenRenderbuffersEXT();
                 }
 
-                @Override public void bindRenderbuffer(int target, int renderbuffer) {
+                public void bindRenderbuffer(int target, int renderbuffer) {
                     glBindRenderbufferEXT(target, renderbuffer);
                 }
 
-                @Override public void renderbufferStorage(int target, int internalformat, int width, int height) {
+                public void renderbufferStorage(int target, int internalformat, int width, int height) {
                     glRenderbufferStorageEXT(target, internalformat, width, height);
                 }
 
-                @Override public void renderbufferStorageMultisample(int target, int samples, int internalformat, int width, int height) {
+                public void renderbufferStorageMultisample(int target, int samples, int internalformat, int width, int height) {
                     glRenderbufferStorageMultisampleEXT(target, samples, internalformat, width, height);
                 }
 
-                @Override public void blitFramebuffer(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, int mask, int filter) {
+                public void blitFramebuffer(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, int mask, int filter) {
                     glBlitFramebufferEXT(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
                 }
 
-                @Override public void deleteRenderbuffers(int renderbuffer) {
+                public void deleteRenderbuffers(int renderbuffer) {
                     glDeleteRenderbuffersEXT(renderbuffer);
                 }
             };

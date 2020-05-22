@@ -49,11 +49,11 @@ import static org.lwjgl.opengl.GL32.*;
 final class RenderStreamPBOAMD extends RenderStreamPBO {
 
     public static final RenderStreamFactory FACTORY = new RenderStreamFactory("AMD_pinned_memory") {
-        @Override public boolean isSupported(final ContextCapabilities caps) {
+        public boolean isSupported(final ContextCapabilities caps) {
             return TextureStreamPBODefault.FACTORY.isSupported(caps) && caps.GL_AMD_pinned_memory && (caps.OpenGL32 || caps.GL_ARB_sync);
         }
 
-        @Override public RenderStream create(final StreamHandler handler, final int samples, final int transfersToBuffer) {
+        public RenderStream create(final StreamHandler handler, final int samples, final int transfersToBuffer) {
             return new RenderStreamPBOAMD(handler, samples, transfersToBuffer);
         }
     };
@@ -66,7 +66,7 @@ final class RenderStreamPBOAMD extends RenderStreamPBO {
         fences = new GLSync[this.transfersToBuffer];
     }
 
-    @Override protected void resizeBuffers(final int height, final int stride) {
+    protected void resizeBuffers(final int height, final int stride) {
         final int renderBytes = height * stride;
 
         for (int i = 0; i < pbos.length; i++) {
@@ -89,21 +89,21 @@ final class RenderStreamPBOAMD extends RenderStreamPBO {
         glBindBuffer(GL_EXTERNAL_VIRTUAL_MEMORY_BUFFER_AMD, 0);
     }
 
-    @Override protected void readBack(final int index) {
+    protected void readBack(final int index) {
         super.readBack(index);
 
         // Insert a fence after ReadPixels
         fences[index] = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
     }
 
-    @Override protected void pinBuffer(final int index) {
+    protected void pinBuffer(final int index) {
         if (fences[index] != null) // Wait for ReadPixels on the PBO to complete
         {
             StreamUtil.waitOnFence(fences, index);
         }
     }
 
-    @Override protected void copyFrames(final int src, final int trg) {
+    protected void copyFrames(final int src, final int trg) {
         StreamUtil.waitOnFence(fences, src);
 
         final ByteBuffer srcBuffer = pinnedBuffers[src];
@@ -115,10 +115,10 @@ final class RenderStreamPBOAMD extends RenderStreamPBO {
         srcBuffer.flip();
     }
 
-    @Override protected void postProcess(final int index) {
+    protected void postProcess(final int index) {
     }
 
-    @Override protected void destroyObjects() {
+    protected void destroyObjects() {
         for (int i = 0; i < fences.length; i++) {
             if (fences[i] != null) {
                 StreamUtil.waitOnFence(fences, i);

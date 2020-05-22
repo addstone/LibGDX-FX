@@ -34,12 +34,12 @@ package org.lwjgl.util.stream;
 /** @author Spasi */
 public interface RenderStream {
 
-	StreamHandler getHandler();
+    StreamHandler getHandler();
 
-	void bind();
+    void bind();
 
-	void swapBuffers();
+    void swapBuffers();
 
-	void destroy();
+    void destroy();
 
 }

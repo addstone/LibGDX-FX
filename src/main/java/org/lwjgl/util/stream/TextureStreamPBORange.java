@@ -44,11 +44,11 @@ import static org.lwjgl.opengl.GL32.*;
 public class TextureStreamPBORange extends TextureStreamPBO {
 
     public static final TextureStreamFactory FACTORY = new TextureStreamFactory("ARB_map_buffer_range") {
-        @Override public boolean isSupported(final ContextCapabilities caps) {
+        public boolean isSupported(final ContextCapabilities caps) {
             return TextureStreamPBODefault.FACTORY.isSupported(caps) && (caps.OpenGL30 || caps.GL_ARB_map_buffer_range);
         }
 
-        @Override public TextureStream create(final StreamHandler handler, final int transfersToBuffer) {
+        public TextureStream create(final StreamHandler handler, final int transfersToBuffer) {
             return new TextureStreamPBORange(handler, transfersToBuffer);
         }
     };
@@ -61,15 +61,15 @@ public class TextureStreamPBORange extends TextureStreamPBO {
         fences = new GLSync[this.transfersToBuffer];
     }
 
-    @Override protected void postUpload(final int index) {
+    protected void postUpload(final int index) {
         fences[index] = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
     }
 
-    @Override protected void postProcess(final int index) {
+    protected void postProcess(final int index) {
         glUnmapBuffer(GL_PIXEL_UNPACK_BUFFER);
     }
 
-    @Override public void pinBuffer(final int index) {
+    public void pinBuffer(final int index) {
         if (fences[index] != null) // Wait for TexSubImage to complete
         {
             StreamUtil.waitOnFence(fences, index);
@@ -81,7 +81,7 @@ public class TextureStreamPBORange extends TextureStreamPBO {
         glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
     }
 
-    @Override public void destroy() {
+    public void destroy() {
         destroyObjects();
     }
 

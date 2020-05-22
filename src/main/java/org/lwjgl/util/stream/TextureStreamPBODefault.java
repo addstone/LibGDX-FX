@@ -41,11 +41,11 @@ import static org.lwjgl.opengl.GL21.*;
 public class TextureStreamPBODefault extends TextureStreamPBO {
 
     public static final TextureStreamFactory FACTORY = new TextureStreamFactory("Asynchronous PBO") {
-        @Override public boolean isSupported(final ContextCapabilities caps) {
+        public boolean isSupported(final ContextCapabilities caps) {
             return caps.OpenGL21 || caps.GL_ARB_pixel_buffer_object || caps.GL_EXT_pixel_buffer_object;
         }
 
-        @Override public TextureStream create(final StreamHandler handler, final int transfersToBuffer) {
+        public TextureStream create(final StreamHandler handler, final int transfersToBuffer) {
             return new TextureStreamPBODefault(handler, transfersToBuffer);
         }
     };
@@ -54,21 +54,21 @@ public class TextureStreamPBODefault extends TextureStreamPBO {
         super(handler, transfersToBuffer);
     }
 
-    @Override protected void postProcess(final int index) {
+    protected void postProcess(final int index) {
         glUnmapBuffer(GL_PIXEL_UNPACK_BUFFER);
     }
 
-    @Override protected void postUpload(final int index) {
+    protected void postUpload(final int index) {
     }
 
-    @Override public void pinBuffer(final int index) {
+    public void pinBuffer(final int index) {
         glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pbos[index]);
         glBufferData(GL_PIXEL_UNPACK_BUFFER, height * stride, GL_STREAM_DRAW); // Orphan previous buffer
         pinnedBuffers[index] = glMapBuffer(GL_PIXEL_UNPACK_BUFFER, GL_WRITE_ONLY, height * stride, pinnedBuffers[index]);
         glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
     }
 
-    @Override public void destroy() {
+    public void destroy() {
         destroyObjects();
     }
 

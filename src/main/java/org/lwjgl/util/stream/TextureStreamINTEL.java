@@ -55,12 +55,12 @@ import static org.lwjgl.opengl.INTELMapTexture.*;
 final class TextureStreamINTEL extends StreamBuffered implements TextureStream {
 
     public static final TextureStreamFactory FACTORY = new TextureStreamFactory("INTEL_map_texture") {
-        @Override public boolean isSupported(final ContextCapabilities caps) {
+        public boolean isSupported(final ContextCapabilities caps) {
             // TODO: We currently require BlitFramebuffer. Relax and implement manually?
             return caps.GL_INTEL_map_texture && (caps.OpenGL30 || caps.GL_ARB_framebuffer_object || caps.GL_EXT_framebuffer_blit);
         }
 
-        @Override public TextureStream create(final StreamHandler handler, final int transfersToBuffer) {
+        public TextureStream create(final StreamHandler handler, final int transfersToBuffer) {
             return new TextureStreamINTEL(handler, transfersToBuffer);
         }
     };
@@ -94,15 +94,15 @@ final class TextureStreamINTEL extends StreamBuffered implements TextureStream {
         buffers = new int[transfersToBuffer];
     }
 
-    @Override public StreamHandler getHandler() {
+    public StreamHandler getHandler() {
         return handler;
     }
 
-    @Override public int getWidth() {
+    public int getWidth() {
         return width;
     }
 
-    @Override public int getHeight() {
+    public int getHeight() {
         return height;
     }
 
@@ -152,7 +152,7 @@ final class TextureStreamINTEL extends StreamBuffered implements TextureStream {
         return texID;
     }
 
-    @Override public void snapshot() {
+    public void snapshot() {
         if (width != handler.getWidth() || height != handler.getHeight()) {
             resize(handler.getWidth(), handler.getHeight());
         }
@@ -186,7 +186,7 @@ final class TextureStreamINTEL extends StreamBuffered implements TextureStream {
         }
     }
 
-    @Override public void tick() {
+    public void tick() {
         final int srcPBO = (int) (currentIndex % transfersToBuffer);
         if (!processingState.get(srcPBO)) {
             return;
@@ -224,11 +224,11 @@ final class TextureStreamINTEL extends StreamBuffered implements TextureStream {
         currentIndex++;
     }
 
-    @Override protected void postProcess(final int index) {
+    protected void postProcess(final int index) {
         glUnmapTexture2DINTEL(buffers[index], 0);
     }
 
-    @Override public void bind() {
+    public void bind() {
         glBindTexture(GL_TEXTURE_2D, texID);
     }
 
@@ -247,7 +247,7 @@ final class TextureStreamINTEL extends StreamBuffered implements TextureStream {
         glDeleteTextures(texID);
     }
 
-    @Override public void destroy() {
+    public void destroy() {
         destroyObjects();
 
         fboUtil.deleteFramebuffers(bufferFBO);

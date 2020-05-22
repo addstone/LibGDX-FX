@@ -79,7 +79,7 @@ abstract class RenderStreamPBO extends StreamBufferedPBO implements RenderStream
         this.samples = StreamUtil.checkSamples(samples, caps);
     }
 
-    @Override public StreamHandler getHandler() {
+    public StreamHandler getHandler() {
         return handler;
     }
 
@@ -154,7 +154,7 @@ abstract class RenderStreamPBO extends StreamBufferedPBO implements RenderStream
         super.resizeBuffers(height, stride, GL_PIXEL_PACK_BUFFER, GL_STREAM_READ);
     }
 
-    @Override public void bind() {
+    public void bind() {
         if (this.width != handler.getWidth() || this.height != handler.getHeight()) {
             resize(handler.getWidth(), handler.getHeight());
         }
@@ -175,7 +175,7 @@ abstract class RenderStreamPBO extends StreamBufferedPBO implements RenderStream
         }
     }
 
-    @Override public void swapBuffers() {
+    public void swapBuffers() {
         if (width == 0 || height == 0) {
             return;
         }
@@ -275,7 +275,7 @@ abstract class RenderStreamPBO extends StreamBufferedPBO implements RenderStream
         }
     }
 
-    @Override public void destroy() {
+    public void destroy() {
         destroyObjects();
 
         if (msaaResolveFBO != 0) {
